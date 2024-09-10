@@ -5,23 +5,15 @@ metadata:
   labels:
     {{- include "assistos.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
       {{- include "assistos.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
+      {{- with .Values.assistos.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      labels:
-        {{- include "assistos.labels" . | nindent 8 }}
-        {{- with .Values.podLabels }}
-        {{- toYaml . | nindent 8 }}
-        {{- end }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -29,7 +21,7 @@ spec:
       {{- end }}
       serviceAccountName: {{ include "assistos.serviceAccountName" . }}
       securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+        {{- toYaml .Values.assistos.podSecurityContext | nindent 8 }}
       containers:
         - name: llmos
           securityContext:
@@ -41,9 +33,9 @@ spec:
               containerPort: {{ .Values.service.llmos.port }}
               protocol: TCP
           livenessProbe:
-            {{- toYaml .Values.livenessProbe.llmos | nindent 12 }}
+            {{- toYaml .Values.llmos.livenessProbe | nindent 12 }}
           readinessProbe:
-            {{- toYaml .Values.readinessProbe.llmos | nindent 12 }}
+            {{- toYaml .Values.llmos.readinessProbe | nindent 12 }}
           volumeMounts:
             - name: llmos-config-volume
               mountPath: /llmos/config.json
@@ -56,16 +48,16 @@ spec:
         - name: assistos
           securityContext:
             {{- toYaml .Values.assistos.securityContext | nindent 12 }}
-          image: "{{ .Values.assistos.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.assistos.image.repository }}:{{ .Values.assistos.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.assistos.image.pullPolicy }}
           ports:
             - name: http
               containerPort: {{ .Values.service.assistos.port }}
               protocol: TCP
           livenessProbe:
-            {{- toYaml .Values.livenessProbe.assistos | nindent 12 }}
+            {{- toYaml .Values.assistos.livenessProbe | nindent 12 }}
           readinessProbe:
-            {{- toYaml .Values.readinessProbe.assistos | nindent 12 }}
+            {{- toYaml .Values.assistos.readinessProbe | nindent 12 }}
           volumeMounts:
             - name: assistos-data-volume
               mountPath: /assistos-workspace/data-volume

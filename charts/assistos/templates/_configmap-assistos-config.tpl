@@ -9,7 +9,7 @@ Arguments to be passed are
 
 See https://blog.flant.com/advanced-helm-templating/
 */}}
-{{- define "assistos.configmap-config" -}}
+{{- define "assistos.configmap-assistos-config" -}}
 {{- $ := index . 0 }}
 {{- $suffix := index . 2 }}
 {{- $annotations := index . 3 }}

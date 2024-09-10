@@ -42,12 +42,7 @@ data:
 {{- end }}
 
   emailConfig.json: |-
-{{- if .Values.config.overrides.apihubJson }}
 {{ .Values.config.overrides.emailConfigJson | b64enc | indent 4 }}
-{{- else }}
-{{ include "assistos.emailConfigJson" . | b64enc | indent 4 }}
-{{- end }}
-
 
 {{- end }}
 {{- end }}
