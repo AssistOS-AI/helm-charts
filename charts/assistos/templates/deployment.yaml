@@ -1,0 +1,134 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "assistos.fullname" . }}
+  labels:
+    {{- include "assistos.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "assistos.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "assistos.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "assistos.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: llmos
+          securityContext:
+            {{- toYaml .Values.llmos.securityContext | nindent 12 }}
+          image: "{{ .Values.llmos.image.repository }}:{{ .Values.llmos.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.llmos.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.llmos.port }}
+              protocol: TCP
+          livenessProbe:
+            {{- toYaml .Values.livenessProbe.llmos | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.readinessProbe.llmos | nindent 12 }}
+          volumeMounts:
+            - name: llmos-config-volume
+              mountPath: /llmos/config.json
+              subPath: config.json
+              readOnly: true
+            - name: llmos-config-volume
+              mountPath: /llmos/supportedCompanies.json
+              subPath: supportedCompanies.json
+              readOnly: true
+        - name: assistos
+          securityContext:
+            {{- toYaml .Values.assistos.securityContext | nindent 12 }}
+          image: "{{ .Values.assistos.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.assistos.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.assistos.port }}
+              protocol: TCP
+          livenessProbe:
+            {{- toYaml .Values.livenessProbe.assistos | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.readinessProbe.assistos | nindent 12 }}
+          volumeMounts:
+            - name: assistos-data-volume
+              mountPath: /assistos-workspace/data-volume
+            - name: assistos-data-volume
+              mountPath: /assistos-workspace/data-volume/config/config.json
+            - name: assistos-data-volume
+              mountPath: /assistos-workspace/data-volume/config/securityConfig.json
+            - name: assistos-secret-volume
+              mountPath: /assistos-workspace/data-volume/config/emailConfig.json
+              subPath: emailConfig.json
+              readOnly: true
+            - name: assistos-secret-volume
+              mountPath: /assistos-workspace/apihub-root/external-volume/config/apihub.json
+              subPath: apihub.json
+              readOnly: true
+            - name: assistos-bdns-config-volume
+              mountPath: /assistos-workspace/apihub-root/external-volume/config/bdns.hosts
+              subPath: bdns.hosts
+              readOnly: true
+            - name: assistos-secret-volume
+              mountPath: /assistos-workspace/env.json
+              subPath: env.json
+              readOnly: true
+            - name: assistos-domains-volume
+              mountPath: /assistos-workspace/apihub-root/external-volume/config/domains/{{ required "config.domain must be set" .Values.config.domain }}.json
+              subPath: {{ required "config.domain must be set" .Values.config.domain }}.json
+              readOnly: true
+              {{- if ne .Values.config.domain .Values.config.subDomain }}
+            - name: assistos-domains-volume
+              mountPath: /assistos-workspace/apihub-root/external-volume/config/domains/{{ required "config.subDomain must be set" .Values.config.subDomain }}.json
+              subPath: {{ required "config.subDomain must be set" .Values.config.subDomain }}.json
+              readOnly: true
+              {{- end}}
+            - name: assistos-domains-volume
+              mountPath: /assistos-workspace/apihub-root/external-volume/config/domains/{{ required "config.vaultDomain must be set" .Values.config.vaultDomain }}.json
+              subPath: {{ required "config.vaultDomain must be set" .Values.config.vaultDomain }}.json
+              readOnly: true
+      volumes:
+        - name: assistos-secret-volume
+          secret:
+            secretName: {{ include "assistos.fullname" . }}
+            defaultMode: 0400
+        - name: assistos-bdns-config-volume
+          configMap:
+            name: {{ include "assistos.fullname" . }}-bdns
+        - name: assistos-domains-volume
+          configMap:
+            name: {{ include "assistos.fullname" . }}-domains
+        - name: assistos-env-volume
+          configMap:
+            name: {{ include "assistos.fullname" . }}-environment
+        - name: assistos-data-volume
+          persistentVolumeClaim:
+            claimName: {{ include "assistos.pvc" . }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

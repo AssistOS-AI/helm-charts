@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "assistos.fullname" . }}
+  labels:
+    {{- include "assistos.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.assistos.type }}
+  ports:
+    - port: {{ .Values.service.assistos.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "assistos.selectorLabels" . | nindent 4 }}

@@ -1,0 +1,11 @@
+{{- /*
+Create Configmaps from templates
+*/}}
+
+{{- include "assistos.configmap-bdns" (list $ . "" (dict)) }}
+---
+{{- include "assistos.configmap-domains" (list $ . "" (dict)) }}
+---
+{{- include "assistos.configmap-llmos-config" (list $ . "" (dict)) }}
+---
+{{- include "assistos.configmap-assistos-config" (list $ . "" (dict)) }}
