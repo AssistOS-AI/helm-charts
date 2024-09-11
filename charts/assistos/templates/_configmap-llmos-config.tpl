@@ -33,7 +33,7 @@ data:
         {
           "PORT": {{ .Values.service.llmos.port }},
           "APIHUB_URL": {{ .Values.config.productionBaseUrl | quote }},
-          "S3_URL": {{ .Values.config.s3Url | quote }},
+          "S3_URL": {{ .Values.config.s3Url | quote }}
         }
     {{- end }}
 

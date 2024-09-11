@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "assistos.fullname" . }}
+  namespace: {{ template "assistos.namespace" . }}
   labels:
     {{- include "assistos.labels" . | nindent 4 }}
 spec:
@@ -10,10 +11,14 @@ spec:
       {{- include "assistos.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.assistos.podAnnotations }}
       annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmaps.yaml") . | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
+      {{- with .Values.assistos.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      labels:
+        {{- include "assistos.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -61,10 +66,13 @@ spec:
           volumeMounts:
             - name: assistos-data-volume
               mountPath: /assistos-workspace/data-volume
-            - name: assistos-data-volume
+            - name: assistos-data-volume-config
               mountPath: /assistos-workspace/data-volume/config/config.json
-            - name: assistos-data-volume
+              subPath: config.json
+            - name: assistos-data-volume-config
               mountPath: /assistos-workspace/data-volume/config/securityConfig.json
+              subPath: securityConfig.json
+              readOnly: true
             - name: assistos-secret-volume
               mountPath: /assistos-workspace/data-volume/config/emailConfig.json
               subPath: emailConfig.json
@@ -109,6 +117,12 @@ spec:
         - name: assistos-env-volume
           configMap:
             name: {{ include "assistos.fullname" . }}-environment
+        - name: llmos-config-volume
+          configMap:
+            name: llmos-config
+        - name: assistos-data-volume-config
+          configMap:
+            name: {{ include "assistos.fullname" . }}-config
         - name: assistos-data-volume
           persistentVolumeClaim:
             claimName: {{ include "assistos.pvc" . }}

@@ -11,12 +11,12 @@ config:
   # -- The Vault domain, should be vault.company, e.g. vault.my-company
   vaultDomain: "vault.my-company"
   buildSecretKey: "nosecretfordevelopers"  # pragma: allowlist secret
-  ssoSecretsEncryptionKey: ""
+  ssoSecretsEncryptionKey: "8d0BO3SUi1hLkuxYiw1Oo8fPRCSN/r0RknDXAYnhKro="
   # -- Enable Dev mode
-  dev: "false"
+  dev: "true"
   environmentMode: "production"
   productionBaseUrl: "http://demo.assistos.net:8080"
-  llmsServerProductionBaseUrl: "http://localhost:8079"
+  llmsServerProductionBaseUrl: "http://llmos.llmos:8079"
   s3Url: "http://demo.assistos.net:8000"
   # -- The assistos version
   overrides:
@@ -38,7 +38,7 @@ config:
 
     # -- Option to explitly set the apihub.json instead of using the default from [https://github.com/pharmaledgerassoc/assistos-workspace/blob/v1.3.1/apihub-root/external-volume/config/apihub.json](https://github.com/pharmaledgerassoc/assistos-workspace/blob/v1.3.1/apihub-root/external-volume/config/apihub.json).
     # Note: If secretProviderClass.enabled=true, then this value is ignored as it is used/mounted from Secret Vault.
-    # <br/>
+    # <br/>assistos-86d4f7878-jrbfw
     # Settings: [https://docs.google.com/document/d/1mg35bb1UBUmTpL1Kt4GuZ7P0K_FMqt2Mb8B3iaDf52I/edit#heading=h.z84gh8sclah3](https://docs.google.com/document/d/1mg35bb1UBUmTpL1Kt4GuZ7P0K_FMqt2Mb8B3iaDf52I/edit#heading=h.z84gh8sclah3)
     # <br/>
     # For SSO (not enabled by default):
@@ -90,15 +90,11 @@ assistos:
     httpGet:
       path: /installation-details
       port: http
-      # It is required to set the Host header to localhost. Reason: With SSO enabled, the default response at / without Header Host=localhost is HTTP 301 which results in warning.
-      httpHeaders:
-        - name: Host
-          value: localhost
-    initialDelaySeconds: 10
-    periodSeconds: 10
-    timeoutSeconds: 1
+    initialDelaySeconds: 20
+    periodSeconds: 20
+    timeoutSeconds: 3
     successThreshold: 1
-    failureThreshold: 3
+    failureThreshold: 5
 
   # -- Readiness probe.
   # See [https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)
@@ -106,15 +102,11 @@ assistos:
     httpGet:
       path: /ready-probe
       port: http
-      # It is required to set the Host header to localhost. Reason: With SSO enabled, the default response at / without Header Host=localhost is HTTP 301 which results in warning.
-      httpHeaders:
-        - name: Host
-          value: localhost
-    initialDelaySeconds: 10
-    periodSeconds: 10
-    timeoutSeconds: 1
+    initialDelaySeconds: 20
+    periodSeconds: 20
+    timeoutSeconds: 3
     successThreshold: 1
-    failureThreshold: 3
+    failureThreshold: 5
 
   # -- Pod Security Context for the runner.
   # See [https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod)
@@ -168,15 +160,11 @@ llmos:
     httpGet:
       path: /apis/v1/authRequirements
       port: http
-      # It is required to set the Host header to localhost. Reason: With SSO enabled, the default response at / without Header Host=localhost is HTTP 301 which results in warning.
-      httpHeaders:
-        - name: Host
-          value: localhost
-    initialDelaySeconds: 10
-    periodSeconds: 10
-    timeoutSeconds: 1
+    initialDelaySeconds: 20
+    periodSeconds: 20
+    timeoutSeconds: 3
     successThreshold: 1
-    failureThreshold: 3
+    failureThreshold: 5
 
   # -- Readiness probe.
   # See [https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)
@@ -184,15 +172,11 @@ llmos:
     httpGet:
       path: /apis/v1/authRequirements
       port: http
-      # It is required to set the Host header to localhost. Reason: With SSO enabled, the default response at / without Header Host=localhost is HTTP 301 which results in warning.
-      httpHeaders:
-        - name: Host
-          value: localhost
-    initialDelaySeconds: 10
-    periodSeconds: 10
-    timeoutSeconds: 1
+    initialDelaySeconds: 20
+    periodSeconds: 20
+    timeoutSeconds: 3
     successThreshold: 1
-    failureThreshold: 3
+    failureThreshold: 5
   podSecurityContext:
     runAsUser: 1000
     runAsGroup: 1000

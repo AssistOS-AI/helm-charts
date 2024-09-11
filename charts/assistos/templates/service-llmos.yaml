@@ -5,9 +5,9 @@ metadata:
   labels:
     {{- include "assistos.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  type: {{ .Values.service.llmos.type }}
   ports:
-    - port: {{ .Values.service.port }}
+    - port: {{ .Values.service.llmos.port }}
       targetPort: http
       protocol: TCP
       name: http
