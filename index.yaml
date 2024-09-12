@@ -2,6 +2,16 @@ apiVersion: v1
 entries:
   assistos:
   - apiVersion: v2
+    appVersion: 1.0.3
+    created: "2024-09-12T17:27:19.523328999Z"
+    description: A Helm chart for Kubernetes
+    digest: c1fe6285b08fa093008f1c8001a830973e76b6086fbd88a09fd375aea440aafe
+    name: assistos
+    type: application
+    urls:
+    - https://github.com/AssistOS-AI/helm-charts/releases/download/assistos-1.0.4/assistos-1.0.4.tgz
+    version: 1.0.4
+  - apiVersion: v2
     appVersion: 1.0.0
     created: "2024-09-10T16:13:51.696152836Z"
     description: A Helm chart for Kubernetes
@@ -11,4 +21,4 @@ entries:
     urls:
     - https://github.com/AssistOS-AI/helm-charts/releases/download/assistos-1.0.3/assistos-1.0.3.tgz
     version: 1.0.3
-generated: "2024-09-10T16:13:51.696162554Z"
+generated: "2024-09-12T17:27:19.523341182Z"
