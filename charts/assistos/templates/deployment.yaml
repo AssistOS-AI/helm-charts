@@ -27,6 +27,13 @@ spec:
       serviceAccountName: {{ include "assistos.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.assistos.podSecurityContext | nindent 8 }}
+      initContainers:
+        - name: init-copy-data
+          image: {{ .Values.assistos.image.repository }}:{{ .Values.assistos.image.tag }}
+          command: [ "sh", "-c", "cp -r /assistos-workspace/data-volume/* /mnt/data-volume/" ]
+          volumeMounts:
+            - name: assistos-data-volume
+              mountPath: /mnt/data-volume
       containers:
         - name: llmos
           securityContext:
