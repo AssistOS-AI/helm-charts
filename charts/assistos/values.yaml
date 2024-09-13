@@ -15,8 +15,8 @@ config:
   # -- Enable Dev mode
   dev: "true"
   environmentMode: "production"
-  productionBaseUrl: "http://demo.assistos.net:8080"
-  llmsServerProductionBaseUrl: "http://llmos.llmos:8079"
+  productionBaseUrl: "http://assistos:8080"
+  llmsServerProductionBaseUrl: "http://llmos:8079"
   s3Url: "http://demo.assistos.net:8000"
   # -- The assistos version
   overrides:
@@ -69,12 +69,12 @@ assistos:
     pullPolicy: Always
     # -- Overrides the image tag whose default is the chart appVersion.
     # Default to v1.3.1
-    tag: "1.0.0-rc1"  # Note to developers: If you change this version also change appVersion in Chart.yaml
+    tag: "1.0.0-rc5"  # Note to developers: If you change this version also change appVersion in Chart.yaml
     # -- sha256 digest of the image.
     # Do not add the prefix "@sha256:"
     # Default to v1.3.1
     # <!-- # pragma: allowlist secret -->
-    sha: "7ce2590532f82044622626d8b15bf569bfd9dbab97f41fff66cd64a08c8f9978"  # pragma: allowlist secret
+    sha: "f9ae416d07cdb3ffac5313b27d384b2f291555497086026dff5df627a2d5b8d4"  # pragma: allowlist secret
 
   # -- Annotations added to the runner pod
   podAnnotations: {}
@@ -88,7 +88,7 @@ assistos:
   # See [https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)
   livenessProbe:
     httpGet:
-      path: /installation-details
+      path: /ready-probe
       port: http
     initialDelaySeconds: 20
     periodSeconds: 20
@@ -106,7 +106,7 @@ assistos:
     periodSeconds: 20
     timeoutSeconds: 3
     successThreshold: 1
-    failureThreshold: 5
+    failureThreshold: 10
 
   # -- Pod Security Context for the runner.
   # See [https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod)
@@ -479,25 +479,13 @@ ingress:
   hosts:
     -
       # -- The FQDN/hostname
-      host: epi.some-pharma-company.com
+      host: assistos.net
       paths:
         -
           # -- The Ingress Path. See [https://kubernetes.io/docs/concepts/services-networking/ingress/#examples](https://kubernetes.io/docs/concepts/services-networking/ingress/#examples)
           # <br/>
           # Note: For Ingress Controllers like AWS LB Controller see their specific documentation.
-          path: /gtinOwner/*
-          # -- The type of path. This value is required since Kubernetes 1.18.
-          # <br/>
-          # For Ingress Controllers like AWS LB Controller or Traefik it is usually required to set its value to ImplementationSpecific
-          # See [https://kubernetes.io/docs/concepts/services-networking/ingress/#path-types](https://kubernetes.io/docs/concepts/services-networking/ingress/#path-types)
-          # and [https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/](https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/)
-          pathType: ImplementationSpecific
-
-        -
-          # -- The Ingress Path. See [https://kubernetes.io/docs/concepts/services-networking/ingress/#examples](https://kubernetes.io/docs/concepts/services-networking/ingress/#examples)
-          # <br/>
-          # Note: For Ingress Controllers like AWS LB Controller see their specific documentation.
-          path: /leaflets/*
+          path: /*
           # -- The type of path. This value is required since Kubernetes 1.18.
           # <br/>
           # For Ingress Controllers like AWS LB Controller or Traefik it is usually required to set its value to ImplementationSpecific
