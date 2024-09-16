@@ -15,8 +15,8 @@ config:
   # -- Enable Dev mode
   dev: "true"
   environmentMode: "production"
-  productionBaseUrl: "http://assistos:8080"
-  llmsServerProductionBaseUrl: "http://llmos:8079"
+  productionBaseUrl: "http://localhost:8080"
+  llmsServerProductionBaseUrl: "http://localhost:8079"
   s3Url: "http://demo.assistos.net:8000"
   # -- The assistos version
   overrides:
