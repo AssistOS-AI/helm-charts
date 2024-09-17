@@ -5,11 +5,11 @@ metadata:
   labels:
     {{- include "assistos.labels" . | nindent 4 }}
 spec:
-{{- if eq .Values.service.type "LoadBalancer" }}
-  {{- if .Values.service.loadBalancerIP }}
-  loadBalancerIP: {{ .Values.service.loadBalancerIP }}
+{{- if eq .Values.service.assistos.type "LoadBalancer" }}
+  {{- if .Values.service.assistos.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.service.assistos.loadBalancerIP }}
   {{- end }}
-  {{- with .Values.service.loadBalancerSourceRanges }}
+  {{- with .Values.service.assistos.loadBalancerSourceRanges }}
   loadBalancerSourceRanges:
     {{- toYaml . | nindent 4 }}
   {{- end }}
