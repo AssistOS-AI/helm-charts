@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "assistos.labels" . | nindent 4 }}
 spec:
-{{- if eq .Values.service.assistos.type "LoadBalancer" }}
+  {{- if eq .Values.service.assistos.type "LoadBalancer" }}
   {{- if .Values.service.assistos.loadBalancerIP }}
   loadBalancerIP: {{ .Values.service.assistos.loadBalancerIP }}
   {{- end }}
@@ -13,12 +13,16 @@ spec:
   loadBalancerSourceRanges:
     {{- toYaml . | nindent 4 }}
   {{- end }}
-{{- end }}
+  {{- end }}
   type: {{ .Values.service.assistos.type }}
   ports:
     - port: {{ .Values.service.assistos.port }}
-      targetPort: http
+      targetPort: 8080
       protocol: TCP
-      name: http
+      name: assistos-http
+    - port: {{ .Values.service.llmos.port }}
+      targetPort: 8079
+      protocol: TCP
+      name: llmos-http
   selector:
     {{- include "assistos.selectorLabels" . | nindent 4 }}
