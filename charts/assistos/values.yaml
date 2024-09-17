@@ -322,7 +322,7 @@ service:
   # -- Either ClusterIP, NodePort or LoadBalancer for the runner
   # See [https://kubernetes.io/docs/concepts/services-networking/service/](https://kubernetes.io/docs/concepts/services-networking/service/)
   assistos:
-    type: ClusterIP
+    type: LoadBalancer
     # -- Port where the service will be exposed
     port: 8080
     # -- Annotations for the service.
