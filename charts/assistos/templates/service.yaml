@@ -5,24 +5,20 @@ metadata:
   labels:
     {{- include "assistos.labels" . | nindent 4 }}
 spec:
-  {{- if eq .Values.service.assistos.type "LoadBalancer" }}
-  {{- if .Values.service.assistos.loadBalancerIP }}
-  loadBalancerIP: {{ .Values.service.assistos.loadBalancerIP }}
+  {{- if eq .Values.service.type "LoadBalancer" }}
+  {{- if .Values.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.service.loadBalancerIP }}
   {{- end }}
-  {{- with .Values.service.assistos.loadBalancerSourceRanges }}
+  {{- with .Values.service.loadBalancerSourceRanges }}
   loadBalancerSourceRanges:
     {{- toYaml . | nindent 4 }}
   {{- end }}
   {{- end }}
-  type: {{ .Values.service.assistos.type }}
+  type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.assistos.port }}
+    - port: {{ .Values.service.port }}
       targetPort: 8080
       protocol: TCP
       name: assistos-http
-    - port: {{ .Values.service.llmos.port }}
-      targetPort: 8079
-      protocol: TCP
-      name: llmos-http
   selector:
     {{- include "assistos.selectorLabels" . | nindent 4 }}

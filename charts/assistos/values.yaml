@@ -17,7 +17,6 @@ config:
   environmentMode: "production"
   productionBaseUrl: "http://localhost:8080"
   llmsServerProductionBaseUrl: "http://localhost:8079"
-  s3Url: "http://demo.assistos.net:8000"
   # -- The assistos version
   overrides:
     # -- Option to explicitly override the config.json used for the domain instead of using the predefined template.
@@ -131,70 +130,6 @@ assistos:
     # Error:
     # API-HUB] Preparing to register middleware from path ./components/mqManager
     # Caught event type [uncaughtException]. Shutting down... uncaughtException Error: ENOENT: no such file or directory, mkdir '/ePI-workspace/apihub-root/messaging'
-    readOnlyRootFilesystem: false
-    runAsNonRoot: true
-    runAsUser: 1000
-    runAsGroup: 1000
-    allowPrivilegeEscalation: false
-
-# Builder Settings
-llmos:
-  image:
-    # -- The repository of the container image for the builder.
-    # <!-- # pragma: allowlist secret -->
-    repository: "assistos/llmos"  # pragma: allowlist secret
-    # -- Image Pull Policy for the builder.
-    pullPolicy: Always
-    # -- Image tag for the builder.
-    # Default to v1.3.1
-    tag: "1.0.0-rc1"
-    # -- sha256 digest of the image for the builder.
-    # Do not add the prefix "@sha256:"
-    # Default to v1.3.1
-    # <!-- # pragma: allowlist secret -->
-    sha: "bdc7763451ce4fe489b831d1f3f5d6799aab697ff96b72d76d24b27dba1d2d94"  # pragma: allowlist secret
-
-  # -- Pod Security Context for the builder.
-  # See [https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod)
-  livenessProbe:
-    httpGet:
-      path: /apis/v1/authRequirements
-      port: http
-    initialDelaySeconds: 20
-    periodSeconds: 20
-    timeoutSeconds: 3
-    successThreshold: 1
-    failureThreshold: 5
-
-  # -- Readiness probe.
-  # See [https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)
-  readinessProbe:
-    httpGet:
-      path: /apis/v1/authRequirements
-      port: http
-    initialDelaySeconds: 20
-    periodSeconds: 20
-    timeoutSeconds: 3
-    successThreshold: 1
-    failureThreshold: 5
-  podSecurityContext:
-    runAsUser: 1000
-    runAsGroup: 1000
-    fsGroup: 1000
-    # -- The SecComp configuration.
-    # Not enabled by default as not every environment supports it.
-    # [https://kubernetes.io/docs/tutorials/security/seccomp/](https://kubernetes.io/docs/tutorials/security/seccomp/)
-    # seccompProfile:
-    #   type: RuntimeDefault
-
-  # -- Security Context for the builder container
-  # See [https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container)
-  securityContext:
-    privileged: false
-    capabilities:
-      drop:
-        - ALL
-    # Running as readonly filesystem is currently (May 2022 with assistos v1.3.1) not possible.
     readOnlyRootFilesystem: false
     runAsNonRoot: true
     runAsUser: 1000
@@ -321,41 +256,22 @@ persistence:
 service:
   # -- Either ClusterIP, NodePort or LoadBalancer for the runner
   # See [https://kubernetes.io/docs/concepts/services-networking/service/](https://kubernetes.io/docs/concepts/services-networking/service/)
-  assistos:
-    type: LoadBalancer
-    # -- Port where the service will be exposed
-    port: 8080
-    # -- Annotations for the service.
-    # See AWS, see [https://kubernetes.io/docs/concepts/services-networking/service/#ssl-support-on-aws](https://kubernetes.io/docs/concepts/services-networking/service/#ssl-support-on-aws)
-    # For Azure, see [https://kubernetes-sigs.github.io/cloud-provider-azure/topics/loadbalancer/#loadbalancer-annotations](https://kubernetes-sigs.github.io/cloud-provider-azure/topics/loadbalancer/#loadbalancer-annotations)
-    annotations: {}
-    # -- A list of CIDR ranges to whitelist for ingress traffic to the service if type is LoadBalancer.
-    # If list is empty, Kubernetes allows traffic from 0.0.0.0/0
-    loadBalancerSourceRanges:
-    # - 8.8.8.8/32
-    # - 8.8.4.4/32
-    # -- A static IP address for the LoadBalancer if type is LoadBalancer.
-    # Note: This only applies to certain Cloud providers like Google or [Azure](https://docs.microsoft.com/en-us/azure/aks/static-ip).
-    # [https://kubernetes.io/docs/concepts/services-networking/service/#type-loadbalancer](https://kubernetes.io/docs/concepts/services-networking/service/#type-loadbalancer).
-    loadBalancerIP: ""
-  
-  llmos:
-    type: ClusterIP
-    # -- Port where the service will be exposed
-    port: 8079
-    # -- Annotations for the service.
-    # See AWS, see [https://kubernetes.io/docs/concepts/services-networking/service/#ssl-support-on-aws](https://kubernetes.io/docs/concepts/services-networking/service/#ssl-support-on-aws)
-    # For Azure, see [https://kubernetes-sigs.github.io/cloud-provider-azure/topics/loadbalancer/#loadbalancer-annotations](https://kubernetes-sigs.github.io/cloud-provider-azure/topics/loadbalancer/#loadbalancer-annotations)
-    annotations: {}
-    # -- A list of CIDR ranges to whitelist for ingress traffic to the service if type is LoadBalancer.
-    # If list is empty, Kubernetes allows traffic from 0.0.0.0/0
-    loadBalancerSourceRanges:
-    # - 8.8.8.8/32
-    # - 8.8.4.4/32
-    # -- A static IP address for the LoadBalancer if type is LoadBalancer.
-    # Note: This only applies to certain Cloud providers like Google or [Azure](https://docs.microsoft.com/en-us/azure/aks/static-ip).
-    # [https://kubernetes.io/docs/concepts/services-networking/service/#type-loadbalancer](https://kubernetes.io/docs/concepts/services-networking/service/#type-loadbalancer).
-    loadBalancerIP: ""
+  type: ClusterIP
+  # -- Port where the service will be exposed
+  port: 8080
+  # -- Annotations for the service.
+  # See AWS, see [https://kubernetes.io/docs/concepts/services-networking/service/#ssl-support-on-aws](https://kubernetes.io/docs/concepts/services-networking/service/#ssl-support-on-aws)
+  # For Azure, see [https://kubernetes-sigs.github.io/cloud-provider-azure/topics/loadbalancer/#loadbalancer-annotations](https://kubernetes-sigs.github.io/cloud-provider-azure/topics/loadbalancer/#loadbalancer-annotations)
+  annotations: {}
+  # -- A list of CIDR ranges to whitelist for ingress traffic to the service if type is LoadBalancer.
+  # If list is empty, Kubernetes allows traffic from 0.0.0.0/0
+  loadBalancerSourceRanges:
+  # - 8.8.8.8/32
+  # - 8.8.4.4/32
+  # -- A static IP address for the LoadBalancer if type is LoadBalancer.
+  # Note: This only applies to certain Cloud providers like Google or [Azure](https://docs.microsoft.com/en-us/azure/aks/static-ip).
+  # [https://kubernetes.io/docs/concepts/services-networking/service/#type-loadbalancer](https://kubernetes.io/docs/concepts/services-networking/service/#type-loadbalancer).
+  loadBalancerIP: ""
 
 # Settings for using SecretProviderClass (CSI Secrets driver) instead of Secret.
 secretProviderClass:
@@ -450,46 +366,3 @@ extraResources:
 #       maxCount: 24
 #     schedule: 15 * * * *
 # Ingress settings for the runner
-ingress:
-  # -- Whether to create ingress or not for the runner.
-  # <br/>
-  # Note: For ingress an Ingress Controller (e.g. AWS LB Controller, NGINX Ingress Controller, Traefik, ...) is required and service.type should be ClusterIP or NodePort depending on your configuration
-  enabled: false
-  # -- The className specifies the IngressClass object which is responsible for that class.
-  # See [https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-class](https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-class)
-  # <br/>
-  # For Kubernetes >= 1.18 it is required to have an existing IngressClass object.
-  # If IngressClass object does not exists, omit className and add the deprecated annotation 'kubernetes.io/ingress.class' instead.
-  # <br/>
-  # For Kubernetes < 1.18 either use className or annotation 'kubernetes.io/ingress.class'.
-  className: ""
-  # -- Ingress annotations.
-  # <br/>
-  # For AWS LB Controller, see [https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.3/guide/ingress/annotations/](https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.3/guide/ingress/annotations/)
-  # <br/>
-  # For Azure Application Gateway Ingress Controller, see [https://azure.github.io/application-gateway-kubernetes-ingress/annotations/](https://azure.github.io/application-gateway-kubernetes-ingress/annotations/)
-  # <br/>
-  # For NGINX Ingress Controller, see [https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/)
-  # <br/>
-  # For Traefik Ingress Controller, see [https://doc.traefik.io/traefik/routing/providers/kubernetes-ingress/#annotations](https://doc.traefik.io/traefik/routing/providers/kubernetes-ingress/#annotations)
-  annotations: {}
-  # kubernetes.io/ingress.class: nginx
-  # kubernetes.io/tls-acme: "true"
-  # -- A list of hostnames and path(s) to listen at the Ingress Controller
-  hosts:
-    -
-      # -- The FQDN/hostname
-      host: assistos.net
-      paths:
-        -
-          # -- The Ingress Path. See [https://kubernetes.io/docs/concepts/services-networking/ingress/#examples](https://kubernetes.io/docs/concepts/services-networking/ingress/#examples)
-          # <br/>
-          # Note: For Ingress Controllers like AWS LB Controller see their specific documentation.
-          path: /*
-          # -- The type of path. This value is required since Kubernetes 1.18.
-          # <br/>
-          # For Ingress Controllers like AWS LB Controller or Traefik it is usually required to set its value to ImplementationSpecific
-          # See [https://kubernetes.io/docs/concepts/services-networking/ingress/#path-types](https://kubernetes.io/docs/concepts/services-networking/ingress/#path-types)
-          # and [https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/](https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/)
-          pathType: ImplementationSpecific
-  tls: []

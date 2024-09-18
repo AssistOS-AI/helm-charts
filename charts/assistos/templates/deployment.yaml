@@ -35,28 +35,6 @@ spec:
             - name: assistos-data-volume
               mountPath: /mnt/data-volume
       containers:
-        - name: llmos
-          securityContext:
-            {{- toYaml .Values.llmos.securityContext | nindent 12 }}
-          image: "{{ .Values.llmos.image.repository }}:{{ .Values.llmos.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.llmos.image.pullPolicy }}
-          ports:
-            - name: http
-              containerPort: {{ .Values.service.llmos.port }}
-              protocol: TCP
-          livenessProbe:
-            {{- toYaml .Values.llmos.livenessProbe | nindent 12 }}
-          readinessProbe:
-            {{- toYaml .Values.llmos.readinessProbe | nindent 12 }}
-          volumeMounts:
-            - name: llmos-config-volume
-              mountPath: /llmos/config.json
-              subPath: config.json
-              readOnly: true
-            - name: llmos-config-volume
-              mountPath: /llmos/supportedCompanies.json
-              subPath: supportedCompanies.json
-              readOnly: true
         - name: assistos
           securityContext:
             {{- toYaml .Values.assistos.securityContext | nindent 12 }}
@@ -64,7 +42,7 @@ spec:
           imagePullPolicy: {{ .Values.assistos.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.service.assistos.port }}
+              containerPort: {{ .Values.service.port }}
               protocol: TCP
           livenessProbe:
             {{- toYaml .Values.assistos.livenessProbe | nindent 12 }}
@@ -124,9 +102,6 @@ spec:
         - name: assistos-env-volume
           configMap:
             name: {{ include "assistos.fullname" . }}-environment
-        - name: llmos-config-volume
-          configMap:
-            name: llmos-config
         - name: assistos-data-volume-config
           configMap:
             name: {{ include "assistos.fullname" . }}-config
