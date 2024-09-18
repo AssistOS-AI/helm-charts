@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "llmadapter.fullname" . }}
+  namespace: {{ template "llmadapter.namespace" . }}
+  labels:
+    {{- include "llmadapter.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "llmadapter.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmaps.yaml") . | sha256sum }}
+      {{- with .Values.llmadapter.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "llmadapter.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "llmadapter.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.llmadapter.podSecurityContext | nindent 8 }}
+      containers:
+        - name: llmadapter
+          securityContext:
+                  {{- toYaml .Values.llmadapter.securityContext | nindent 12 }}
+          image: "{{ .Values.llmadapter.image.repository }}:{{ .Values.llmadapter.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.llmadapter.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          livenessProbe:
+                  {{- toYaml .Values.llmadapter.livenessProbe | nindent 12 }}
+          readinessProbe:
+                  {{- toYaml .Values.llmadapter.readinessProbe | nindent 12 }}
+          volumeMounts:
+            - name: llmadapter-config-volume
+              mountPath: /llmadapter/config.json
+              subPath: config.json
+              readOnly: true
+            - name: llmadapter-config-volume
+              mountPath: /llmadapter/supportedCompanies.json
+              subPath: supportedCompanies.json
+              readOnly: true
+      volumes:
+        - name: llmadapter-config-volume
+          configMap:
+            name: llmadapter-config
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

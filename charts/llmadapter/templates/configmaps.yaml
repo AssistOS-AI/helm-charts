@@ -1,0 +1,4 @@
+{{- /*
+Create Configmaps from templates
+*/}}
+{{- include "llmadapter.configmap-llmadapter-config" (list $ . "" (dict)) }}
