@@ -37,7 +37,7 @@ jobs:
       - uses: pre-commit/action@9b88afc9cd57fd75b655d5c71bd38146d07135fe # v2.0.3
         name: Run pre-commit
         with:
-          extra_args: --files charts/assistos/*
+          extra_args: --files charts/assistos/* charts/llmadapter/*
 
   checkov:
     runs-on: ubuntu-latest
