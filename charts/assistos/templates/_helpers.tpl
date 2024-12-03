@@ -108,18 +108,40 @@ Configuration apihub.json.
     "externalStorage": "../data-volume",
     "port": 8080,
     "preventRateLimit": true,
-    "activeComponents": ["bdns", "bricking", "anchoring", "enclave", "mq", "secrets", "versionlessDSU", "llms", "users-storage", "spaces-storage", "knowledge-storage","applications-storage","server-flow-apis", "subscribers", "webhook", "tasks", "flows", "lightDBEnclave", "staticServer"],
+    "activeComponents": [
+        "bdns",
+        "bricking",
+        "anchoring",
+        "enclave",
+        "mq",
+        "secrets",
+        "versionlessDSU",
+        "llms",
+        "users-storage",
+        "spaces-storage",
+        "knowledge-storage",
+        "applications-storage",
+        "server-flow-apis",
+        "subscribers",
+        "webhook",
+        "tasks",
+        "flows",
+        "lightDBEnclave",
+        "staticServer"
+    ],
     "componentsConfig": {
         "staticServer": {
-            "excludedFiles": [".*.secret"],
+            "excludedFiles": [
+                ".*.secret"
+            ],
             "root": "../apihub-root/"
         },
         "bricking": {},
         "anchoring": {},
-        "llms" :{
+        "llms": {
             "module": "./../../apihub-components/llms"
         },
-        "users-storage" :{
+        "users-storage": {
             "module": "./../../apihub-components/users-storage"
         },
         "spaces-storage": {
@@ -137,13 +159,13 @@ Configuration apihub.json.
         "subscribers": {
             "module": "./../../apihub-components/subscribers"
         },
-        "flows" :{
+        "flows": {
             "module": "./../../apihub-components/flows"
         },
-        "webhook" :{
+        "webhook": {
             "module": "./../../apihub-components/webhook"
         },
-        "tasks" :{
+        "tasks": {
             "module": "./../../apihub-components/tasks"
         }
     },
