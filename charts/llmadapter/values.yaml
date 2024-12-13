@@ -8,9 +8,7 @@ config:
   productionBaseUrl: "http://assistos:8080"
   llmsServerProductionBaseUrl: "http://llmadapter:8079"
   s3Url: "http://demo.assistos.net:8000"
-  # -- The assistos version
-  overrides:
-    configJson: ""
+
 # Runner settings
 llmadapter:
   image:
