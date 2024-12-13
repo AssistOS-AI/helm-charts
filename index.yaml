@@ -114,6 +114,16 @@ entries:
   llmadapter:
   - apiVersion: v2
     appVersion: 1.0.0
+    created: "2024-12-13T15:08:17.869359065Z"
+    description: A Helm chart for Kubernetes
+    digest: 7394e5dd72b24346bba6d874ad60acdeea5b8f9aa224f0a06fc66a2160a1ad79
+    name: llmadapter
+    type: application
+    urls:
+    - https://github.com/AssistOS-AI/helm-charts/releases/download/llmadapter-1.0.5/llmadapter-1.0.5.tgz
+    version: 1.0.5
+  - apiVersion: v2
+    appVersion: 1.0.0
     created: "2024-12-13T15:03:04.85877332Z"
     description: A Helm chart for Kubernetes
     digest: 479d94895677a2ed042fd83167ae5c11f937ec75f87ddf3de523d14f8aa5d9b5
@@ -152,4 +162,4 @@ entries:
     urls:
     - https://github.com/AssistOS-AI/helm-charts/releases/download/llmadapter-1.0.1/llmadapter-1.0.1.tgz
     version: 1.0.1
-generated: "2024-12-13T15:03:04.858821711Z"
+generated: "2024-12-13T15:08:17.869425981Z"
