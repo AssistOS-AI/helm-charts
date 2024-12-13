@@ -45,6 +45,10 @@ spec:
               mountPath: /llmadapter/config.json
               subPath: config.json
               readOnly: true
+            - name: llmadapter-config-volume
+              mountPath: /llmadapter/supportedCompanies.json
+              subPath: supportedCompanies.json
+              readOnly: true
       volumes:
         - name: llmadapter-config-volume
           configMap:
