@@ -37,7 +37,7 @@ data:
           "SERVER_ROOT_FOLDER": "./apihub-root",
           "SECURITY_MODULE_PATH": "./apihub-space-core/securityModule.json",
           "STORAGE_VOLUME_PATH": "./data-volume",
-          "CLEAN_STORAGE_VOLUME_ON_RESTART": true,
+          "CLEAN_STORAGE_VOLUME_ON_RESTART": {{ .Values.config.cleanStorageVolumeOnRestart | quote }},
           "CREATE_DEMO_USER": false,
           "REGENERATE_TOKEN_SECRETS_ON_RESTART": false,
           "LLMS_SERVER_DEVELOPMENT_BASE_URL": "http://localhost:8079",
