@@ -9,6 +9,11 @@ config:
   llmsServerProductionBaseUrl: "http://llmadapter:8079"
   s3Url: "http://demo.assistos.net:8000"
   # -- The assistos version
+  env:
+    awsAccessKeyId: ""
+    awsSecretAccessKey: ""
+    devBucket: ""
+
   overrides:
     configJson: ""
 # Runner settings

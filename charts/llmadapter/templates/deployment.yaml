@@ -45,10 +45,17 @@ spec:
               mountPath: /llmadapter/config.json
               subPath: config.json
               readOnly: true
+            - name: llmadapter-env
+              mountPath: /llmadapter/.env
+              subPath: .env
+              readOnly: true
       volumes:
         - name: llmadapter-config-volume
           configMap:
             name: llmadapter-config
+        - name: llmadapter-env
+          secret:
+            secretName: {{ include "llmadapter.fullname" . }}-env
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
