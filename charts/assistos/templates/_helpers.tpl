@@ -118,13 +118,16 @@ Configuration apihub.json.
         "versionlessDSU",
         "llms",
         "users-storage",
+        "document",
         "spaces-storage",
         "knowledge-storage",
         "applications-storage",
         "server-flow-apis",
+        "personalities-storage",
         "subscribers",
         "webhook",
         "tasks",
+        "logger",
         "flows",
         "lightDBEnclave",
         "staticServer"
@@ -143,6 +146,9 @@ Configuration apihub.json.
         },
         "users-storage": {
             "module": "./../../apihub-components/users-storage"
+        },
+        "document": {
+            "module": "./../../apihub-components/document"
         },
         "spaces-storage": {
             "module": "./../../apihub-components/spaces-storage"
@@ -167,6 +173,9 @@ Configuration apihub.json.
         },
         "tasks": {
             "module": "./../../apihub-components/tasks"
+        },
+        "logger": {
+            "module": "./../../apihub-components/logger"
         }
     },
     "responseHeaders": {
@@ -175,7 +184,6 @@ Configuration apihub.json.
     },
     "enableRequestLogger": true,
     "enableJWTAuthorisation": false,
-    "enableOAuth": false,
-    "enableLocalhostAuthorization": false
+    "enableOAuth": false
 }
 {{- end }}
