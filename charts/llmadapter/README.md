@@ -1,6 +1,6 @@
 # llmadapter
 
-![Version: 1.0.6](https://img.shields.io/badge/Version-1.0.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
+![Version: 1.0.7](https://img.shields.io/badge/Version-1.0.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -9,7 +9,7 @@ A Helm chart for Kubernetes
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity for scheduling a pod. See [https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/) |
-| config.env | object | `{"awsAccessKeyId":"","awsSecretAccessKey":"","devBucket":""}` | The assistos version |
+| config.env | object | `{"awsAccessKeyId":"","awsSecretAccessKey":"","bucketName":""}` | The assistos version |
 | config.llmsServerProductionBaseUrl | string | `"http://llmadapter:8079"` |  |
 | config.overrides.configJson | string | `""` |  |
 | config.productionBaseUrl | string | `"http://assistos:8080"` | The Domain, e.g. "epipoc" |
