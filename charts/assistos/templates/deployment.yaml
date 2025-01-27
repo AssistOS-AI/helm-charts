@@ -30,7 +30,21 @@ spec:
       initContainers:
         - name: init-copy-data
           image: {{ .Values.assistos.image.repository }}:{{ .Values.assistos.image.tag }}
-          command: [ "sh", "-c", "cp -r /assistos-workspace/data-volume/* /mnt/data-volume/" ]
+          command:
+            - /bin/sh
+            - -c
+            - |
+              # Check if initialization marker exists
+              if [ ! -f /mnt/data-volume/.init-complete ]; then
+                echo "Performing first-time initialization..."
+                # Copy all data
+                cp -r /assistos-workspace/data-volume/* /mnt/data-volume/
+                # Create marker file to indicate initialization is complete
+                touch /mnt/data-volume/.init-complete
+                echo "Initialization complete"
+              else
+                echo "Already initialized, skipping data copy"
+              fi
           volumeMounts:
             - name: assistos-data-volume
               mountPath: /mnt/data-volume
