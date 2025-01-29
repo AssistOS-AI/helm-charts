@@ -41,7 +41,8 @@ data:
           "CREATE_DEMO_USER": false,
           "REGENERATE_TOKEN_SECRETS_ON_RESTART": false,
           "LLMS_SERVER_DEVELOPMENT_BASE_URL": "http://localhost:8079",
-          "LLMS_SERVER_PRODUCTION_BASE_URL": {{ .Values.config.llmsServerProductionBaseUrl | quote }}
+          "LLMS_SERVER_PRODUCTION_BASE_URL": {{ .Values.config.llmsServerProductionBaseUrl | quote }},
+          "S3": {{ .Values.config.s3 | quote }}
         }
     {{- end }}
 
