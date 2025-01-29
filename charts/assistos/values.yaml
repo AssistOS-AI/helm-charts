@@ -17,6 +17,7 @@ config:
   environmentMode: "production"
   productionBaseUrl: "http://localhost:8080"
   llmsServerProductionBaseUrl: "http://localhost:8079"
+  s3: true
   # -- The assistos version
   overrides:
     # -- Option to explicitly override the config.json used for the domain instead of using the predefined template.

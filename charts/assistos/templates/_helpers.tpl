@@ -95,6 +95,7 @@ Configuration env.json
   "BDNS_ROOT_HOSTS": "http://127.0.0.1:8080",
   "OPENDSU_ENABLE_DEBUG": {{ required "config.dev must be set" .Values.config.dev | quote}},
   "BASE_URL": {{ required "config.productionBaseUrl must be set" .Values.config.productionBaseUrl | quote}}
+  "S3": {{ required "config.s3 must be set" .Values.config.s3 | quote}}
 }
 {{- end }}
 

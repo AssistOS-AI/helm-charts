@@ -1,6 +1,6 @@
 # assistos
 
-![Version: 1.0.17](https://img.shields.io/badge/Version-1.0.17-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
+![Version: 1.0.18](https://img.shields.io/badge/Version-1.0.18-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -32,6 +32,7 @@ A Helm chart for Kubernetes
 | config.overrides.subDomainConfigJson | string | `""` | Option to explicitly override the config.json used for the subDomain instead of using the predefined template. Note: Usually not required |
 | config.overrides.vaultDomainConfigJson | string | `""` | Option to explicitly override the config.json used for the vaultDomain instead of using the predefined template. Note: Usually not required |
 | config.productionBaseUrl | string | `"http://localhost:8080"` |  |
+| config.s3 | bool | `true` |  |
 | config.ssoSecretsEncryptionKey | string | `"8d0BO3SUi1hLkuxYiw1Oo8fPRCSN/r0RknDXAYnhKro="` |  |
 | config.subDomain | string | `"epipoc.my-company"` | The Subdomain, should be domain.company, e.g. epipoc.my-company |
 | config.vaultDomain | string | `"vault.my-company"` | The Vault domain, should be vault.company, e.g. vault.my-company |
