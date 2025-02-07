@@ -18,6 +18,8 @@ config:
   productionBaseUrl: "http://localhost:8080"
   llmsServerProductionBaseUrl: "http://localhost:8079"
   s3: true
+  env:
+    GIT_TOKEN: ""
   logLevel: "DEBUG"
   # -- The assistos version
   overrides:

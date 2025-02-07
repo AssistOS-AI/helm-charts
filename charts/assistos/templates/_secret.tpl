@@ -43,6 +43,9 @@ data:
 
   emailConfig.json: |-
 {{ .Values.config.overrides.emailConfigJson | b64enc | indent 4 }}
+stringData:
+  .env: |
+    GIT_TOKEN={{ .Values.config.env.GIT_TOKEN | quote }}
 
 {{- end }}
 {{- end }}
