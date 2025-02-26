@@ -1,0 +1,71 @@
+{{- if .Values.docsConverter.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: docs-converter
+  namespace: {{ template "assistos.namespace" . }}
+  labels:
+    {{- include "assistos.labels" . | nindent 4 }}
+    app.kubernetes.io/component: docs-converter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "assistos.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: docs-converter
+  template:
+    metadata:
+      {{- with .Values.docsConverter.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "assistos.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: docs-converter
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "assistos.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.docsConverter.podSecurityContext | nindent 8 }}
+      containers:
+        - name: docs-converter
+          securityContext:
+            {{- toYaml .Values.docsConverter.securityContext | nindent 12 }}
+          image: "{{ .Values.docsConverter.image.repository }}:{{ .Values.docsConverter.image.tag }}"
+          imagePullPolicy: {{ .Values.docsConverter.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.docsConverter.service.port }}
+              protocol: TCP
+          livenessProbe:
+            {{- toYaml .Values.docsConverter.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.docsConverter.readinessProbe | nindent 12 }}
+          resources:
+            {{- toYaml .Values.docsConverter.resources | nindent 12 }}
+          volumeMounts:
+            - name: storage-volume
+              mountPath: /app/storage
+          env:
+            - name: STORAGE_DIR
+              value: "/app/storage"
+      volumes:
+        - name: storage-volume
+          persistentVolumeClaim:
+            claimName: docs-converter
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}
