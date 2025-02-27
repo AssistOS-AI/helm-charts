@@ -1,5 +1,5 @@
 {{- /*
-Template for Configmap for AssistOS SDK.
+Template for Configmap for AssistOS API Hub Root.
 
 Arguments to be passed are 
 - $ (index 0)
@@ -9,7 +9,7 @@ Arguments to be passed are
 
 See https://blog.flant.com/advanced-helm-templating/
 */}}
-{{- define "assistos.configmap-assistos-sdk-config" -}}
+{{- define "assistos.configmap-assistos-apihub-root-config" -}}
 {{- $ := index . 0 }}
 {{- $suffix := index . 2 }}
 {{- $annotations := index . 3 }}
@@ -17,7 +17,7 @@ See https://blog.flant.com/advanced-helm-templating/
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "assistos.fullname" . }}-sdk-config{{ $suffix | default "" }}
+  name: {{ include "assistos.fullname" . }}-apihub-root-config{{ $suffix | default "" }}
   namespace: {{ template "assistos.namespace" . }}
   {{- with $annotations }}
   annotations:

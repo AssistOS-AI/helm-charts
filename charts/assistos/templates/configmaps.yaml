@@ -8,4 +8,4 @@ Create Configmaps from templates
 ---
 {{- include "assistos.configmap-assistos-config" (list $ . "" (dict)) }}
 ---
-{{- include "assistos.configmap-assistos-sdk-config" (list $ . "" (dict)) }}
+{{- include "assistos.configmap-assistos-apihub-root-config" (list $ . "" (dict)) }}
