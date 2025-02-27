@@ -129,6 +129,9 @@ spec:
         - name: assistos-data-volume
           persistentVolumeClaim:
             claimName: {{ include "assistos.pvc" . }}
+        - name:  assistos-apihub-root-config
+          configMap:
+            name: {{ include "assistos.fullname" . }}-apihub-root-config
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
