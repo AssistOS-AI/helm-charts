@@ -72,10 +72,6 @@ spec:
               mountPath: /assistos-workspace/data-volume/config/securityConfig.json
               subPath: securityConfig.json
               readOnly: true
-            - name: assistos-apihub-root-config
-              mountPath: /assistos-workspace/apihub-root/assistOS-configs.json
-              subPath: assistOS-configs.json
-              readOnly: true
             - name: assistos-secret-volume
               mountPath: /assistos-workspace/data-volume/config/emailConfig.json
               subPath: emailConfig.json
@@ -129,9 +125,6 @@ spec:
         - name: assistos-data-volume
           persistentVolumeClaim:
             claimName: {{ include "assistos.pvc" . }}
-        - name:  assistos-apihub-root-config
-          configMap:
-            name: {{ include "assistos.fullname" . }}-apihub-root-config
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
