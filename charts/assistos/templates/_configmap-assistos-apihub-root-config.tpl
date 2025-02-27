@@ -26,7 +26,7 @@ metadata:
   labels:
     {{- include "assistos.labels" . | nindent 4 }}
 data:
-  config.json: |-
+  assistOS-configs.json: |-
     {
       "docsConverterUrl": {{ .Values.config.docsConverterUrl | quote }}
     }
