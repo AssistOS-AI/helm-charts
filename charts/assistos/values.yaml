@@ -18,6 +18,7 @@ config:
   productionBaseUrl: "http://localhost:8080"
   llmsServerProductionBaseUrl: "http://localhost:8079"
   docsConverterUrl: "http://docsConverter:3001"
+  enableEmailService: "true"
   s3: true
   env:
     GIT_TOKEN: ""

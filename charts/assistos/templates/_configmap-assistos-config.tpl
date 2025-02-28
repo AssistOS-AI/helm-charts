@@ -39,6 +39,7 @@ data:
           "STORAGE_VOLUME_PATH": "./data-volume",
           "CLEAN_STORAGE_VOLUME_ON_RESTART": {{ .Values.config.cleanStorageVolumeOnRestart | quote }},
           "CREATE_DEMO_USER": false,
+          "ENABLE_EMAIL_SERVICE": {{ .Values.config.enableEmailService | quote }},
           "REGENERATE_TOKEN_SECRETS_ON_RESTART": false,
           "LLMS_SERVER_DEVELOPMENT_BASE_URL": "http://localhost:8079",
           "LLMS_SERVER_PRODUCTION_BASE_URL": {{ .Values.config.llmsServerProductionBaseUrl | quote }},

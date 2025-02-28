@@ -1,6 +1,6 @@
 # assistos
 
-![Version: 1.0.30](https://img.shields.io/badge/Version-1.0.30-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
+![Version: 1.0.31](https://img.shields.io/badge/Version-1.0.31-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -23,6 +23,7 @@ A Helm chart for Kubernetes
 | config.dev | string | `"true"` | Enable Dev mode |
 | config.docsConverterUrl | string | `"http://docsConverter:3001"` |  |
 | config.domain | string | `"epipoc"` | The Domain, e.g. "epipoc" |
+| config.enableEmailService | string | `"true"` |  |
 | config.env.GIT_TOKEN | string | `""` |  |
 | config.environmentMode | string | `"production"` |  |
 | config.llmsServerProductionBaseUrl | string | `"http://localhost:8079"` |  |
