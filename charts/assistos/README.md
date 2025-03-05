@@ -1,6 +1,6 @@
 # assistos
 
-![Version: 1.0.31](https://img.shields.io/badge/Version-1.0.31-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
+![Version: 1.0.32](https://img.shields.io/badge/Version-1.0.32-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -21,7 +21,6 @@ A Helm chart for Kubernetes
 | assistos.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":false,"runAsGroup":1000,"runAsNonRoot":true,"runAsUser":1000}` | Security Context for the runner container See [https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container) |
 | config.buildSecretKey | string | `"nosecretfordevelopers"` |  |
 | config.dev | string | `"true"` | Enable Dev mode |
-| config.docsConverterUrl | string | `"http://docsConverter:3001"` |  |
 | config.domain | string | `"epipoc"` | The Domain, e.g. "epipoc" |
 | config.enableEmailService | string | `"true"` |  |
 | config.env.GIT_TOKEN | string | `""` |  |
@@ -40,51 +39,6 @@ A Helm chart for Kubernetes
 | config.ssoSecretsEncryptionKey | string | `"8d0BO3SUi1hLkuxYiw1Oo8fPRCSN/r0RknDXAYnhKro="` |  |
 | config.subDomain | string | `"epipoc.my-company"` | The Subdomain, should be domain.company, e.g. epipoc.my-company |
 | config.vaultDomain | string | `"vault.my-company"` | The Vault domain, should be vault.company, e.g. vault.my-company |
-| docsConverter.deploymentStrategy.type | string | `"Recreate"` |  |
-| docsConverter.enabled | bool | `true` |  |
-| docsConverter.image.pullPolicy | string | `"Always"` |  |
-| docsConverter.image.repository | string | `"assistos/docsconverter"` |  |
-| docsConverter.image.sha | string | `"08fe10d1303f8daeb0ec0990e54fb8268ef49f5faddb6c9719c731755595b917"` |  |
-| docsConverter.image.tag | string | `"1.0.0-rc1"` |  |
-| docsConverter.livenessProbe.failureThreshold | int | `10` |  |
-| docsConverter.livenessProbe.httpGet.path | string | `"/ready"` |  |
-| docsConverter.livenessProbe.httpGet.port | string | `"http"` |  |
-| docsConverter.livenessProbe.initialDelaySeconds | int | `20` |  |
-| docsConverter.livenessProbe.periodSeconds | int | `20` |  |
-| docsConverter.livenessProbe.successThreshold | int | `1` |  |
-| docsConverter.livenessProbe.timeoutSeconds | int | `3` |  |
-| docsConverter.persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
-| docsConverter.persistence.enabled | bool | `true` |  |
-| docsConverter.persistence.existingClaim | string | `""` |  |
-| docsConverter.persistence.finalizers[0] | string | `"kubernetes.io/pvc-protection"` |  |
-| docsConverter.persistence.selectorLabels | object | `{}` |  |
-| docsConverter.persistence.size | string | `"10Gi"` |  |
-| docsConverter.persistence.storageClassName | string | `""` |  |
-| docsConverter.podAnnotations | object | `{}` |  |
-| docsConverter.podSecurityContext.fsGroup | int | `1000` |  |
-| docsConverter.podSecurityContext.runAsGroup | int | `1000` |  |
-| docsConverter.podSecurityContext.runAsUser | int | `1000` |  |
-| docsConverter.readinessProbe.failureThreshold | int | `10` |  |
-| docsConverter.readinessProbe.httpGet.path | string | `"/ready"` |  |
-| docsConverter.readinessProbe.httpGet.port | string | `"http"` |  |
-| docsConverter.readinessProbe.initialDelaySeconds | int | `20` |  |
-| docsConverter.readinessProbe.periodSeconds | int | `20` |  |
-| docsConverter.readinessProbe.successThreshold | int | `1` |  |
-| docsConverter.readinessProbe.timeoutSeconds | int | `3` |  |
-| docsConverter.resources.limits.cpu | string | `"500m"` |  |
-| docsConverter.resources.limits.memory | string | `"512Mi"` |  |
-| docsConverter.resources.requests.cpu | string | `"200m"` |  |
-| docsConverter.resources.requests.memory | string | `"256Mi"` |  |
-| docsConverter.securityContext.allowPrivilegeEscalation | bool | `false` |  |
-| docsConverter.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
-| docsConverter.securityContext.privileged | bool | `false` |  |
-| docsConverter.securityContext.readOnlyRootFilesystem | bool | `false` |  |
-| docsConverter.securityContext.runAsGroup | int | `1000` |  |
-| docsConverter.securityContext.runAsNonRoot | bool | `true` |  |
-| docsConverter.securityContext.runAsUser | int | `1000` |  |
-| docsConverter.service.port | int | `3001` |  |
-| docsConverter.service.targetPort | int | `3001` |  |
-| docsConverter.service.type | string | `"ClusterIP"` |  |
 | extraResources | string | `nil` | An array of extra resources that will be deployed. This is useful e.g. for custom resources like SnapshotSchedule provided by [https://github.com/backube/snapscheduler](https://github.com/backube/snapscheduler). |
 | fullnameOverride | string | `""` | fullnameOverride completely replaces the generated name. From [https://stackoverflow.com/questions/63838705/what-is-the-difference-between-fullnameoverride-and-nameoverride-in-helm](https://stackoverflow.com/questions/63838705/what-is-the-difference-between-fullnameoverride-and-nameoverride-in-helm) |
 | imagePullSecrets | list | `[]` | Secret(s) for pulling an container image from a private registry. Used for all images. See [https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/) |
