@@ -28,7 +28,7 @@ metadata:
 data:
   docsconverter-config.json: |-
     {
-      "docsConverterUrl": {{ .Values.config.docsConverterUrl | quote }}
+      "logLevel": {{ .Values.config.logLevel | quote }}
     }
   {{- end }}
 {{- end -}}

@@ -10,7 +10,6 @@ config:
   logLevel: "info"
   # Override the config file with custom content
   overrideConfigJson: ""
-  docsConverterUrl: "http://docsConverter:3001"
 
 image:
   repository: assistos/docsconverter
