@@ -3,6 +3,16 @@ entries:
   assistos:
   - apiVersion: v2
     appVersion: 1.0.0
+    created: "2025-03-05T15:27:25.352043125Z"
+    description: A Helm chart for Kubernetes
+    digest: 93701e601c254abc49b8f6357d6ed10d897f8c68d6cfda39cc500fa18a5ef6d4
+    name: assistos
+    type: application
+    urls:
+    - https://github.com/AssistOS-AI/helm-charts/releases/download/assistos-1.0.33/assistos-1.0.33.tgz
+    version: 1.0.33
+  - apiVersion: v2
+    appVersion: 1.0.0
     created: "2025-03-05T07:58:36.585563246Z"
     description: A Helm chart for Kubernetes
     digest: d208ddd7f5cba306f2ef63361446fd8381b88241ab003d852fa01c620bc7f3ef
@@ -284,6 +294,16 @@ entries:
   docsconverter:
   - apiVersion: v2
     appVersion: 1.0.0
+    created: "2025-03-05T15:27:25.453380969Z"
+    description: A Helm chart for Kubernetes
+    digest: 9eb5dfcf0c09509ccd641753658021c3919954dd56925ab99bcc33984f44d79b
+    name: docsconverter
+    type: application
+    urls:
+    - https://github.com/AssistOS-AI/helm-charts/releases/download/docsconverter-1.0.2/docsconverter-1.0.2.tgz
+    version: 1.0.2
+  - apiVersion: v2
+    appVersion: 1.0.0
     created: "2025-03-05T11:09:24.235156338Z"
     description: A Helm chart for Kubernetes
     digest: 6fa5a43843c121491ca3aeaedfdc9ac89a1038591fa8eeb4cb024368ab7b6c2a
@@ -393,4 +413,4 @@ entries:
     urls:
     - https://github.com/AssistOS-AI/helm-charts/releases/download/llmadapter-1.0.1/llmadapter-1.0.1.tgz
     version: 1.0.1
-generated: "2025-03-05T11:09:24.23537764Z"
+generated: "2025-03-05T15:27:25.453664908Z"
