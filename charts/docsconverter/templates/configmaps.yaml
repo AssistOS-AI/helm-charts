@@ -1,1 +1,1 @@
-{{- include "docsconverter.configmap-docsconverter-config" (list . . "") -}} 
+{{- include "docsconverter.configmap-docsconverter-config" (list . . "" dict) -}} 
