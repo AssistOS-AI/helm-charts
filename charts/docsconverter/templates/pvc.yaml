@@ -1,0 +1,29 @@
+{{- if and .Values.persistence.enabled (not .Values.persistence.existingClaim) }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "docsconverter.fullname" . }}
+  namespace: {{ include "docsconverter.namespace" . }}
+  labels:
+    {{- include "docsconverter.labels" . | nindent 4 }}
+  {{- with .Values.persistence.finalizers }}
+  finalizers:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if .Values.persistence.storageClassName }}
+  storageClassName: {{ .Values.persistence.storageClassName }}
+  {{- end }}
+  accessModes:
+    {{- range .Values.persistence.accessModes }}
+    - {{ . | quote }}
+    {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.size | quote }}
+  {{- with .Values.persistence.selectorLabels }}
+  selector:
+    matchLabels:
+      {{- toYaml . | nindent 6 }}
+  {{- end }}
+{{- end }} 

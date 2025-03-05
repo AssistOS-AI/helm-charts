@@ -1,0 +1,135 @@
+# Default values for docsconverter.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+# Application configuration
+config:
+  # Log level for the application (debug, info, warn, error)
+  logLevel: "info"
+  # Override the config file with custom content
+  overrideConfigJson: ""
+  docsConverterUrl: "http://docsConverter:3001"
+
+image:
+  repository: assistos/docsconverter
+  pullPolicy: Always
+  tag: "1.0.0-rc1"
+  sha: "08fe10d1303f8daeb0ec0990e54fb8268ef49f5faddb6c9719c731755595b917"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+# -- (string) Namespace override for multi-namespace deployments in combined charts
+namespaceOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext:
+  runAsUser: 1000
+  runAsGroup: 1000
+  fsGroup: 1000
+
+securityContext:
+  privileged: false
+  capabilities:
+    drop:
+      - ALL
+  readOnlyRootFilesystem: false
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
+  allowPrivilegeEscalation: false
+
+service:
+  type: ClusterIP
+  port: 3001
+  targetPort: 3001
+
+deploymentStrategy:
+  type: Recreate
+
+livenessProbe:
+  httpGet:
+    path: /ready
+    port: http
+  initialDelaySeconds: 20
+  periodSeconds: 20
+  timeoutSeconds: 3
+  successThreshold: 1
+  failureThreshold: 10
+
+readinessProbe:
+  httpGet:
+    path: /ready
+    port: http
+  initialDelaySeconds: 20
+  periodSeconds: 20
+  timeoutSeconds: 3
+  successThreshold: 1
+  failureThreshold: 10
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 200m
+    memory: 256Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+persistence:
+  enabled: true
+  existingClaim: ""
+  storageClassName: ""
+  size: "10Gi"
+  accessModes:
+    - ReadWriteOnce
+  selectorLabels: {}
+  finalizers:
+    - kubernetes.io/pvc-protection
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+# Optional SecretProviderClass configuration for external secret providers
+secretProviderClass:
+  enabled: false
+  providerName: ""
+  parameters: {}
+  secretObjects: []
+
+# Volume snapshots for backup
+volumeSnapshots:
+  enabled: false
+  className: ""
+  annotations: {}
+  labels: {}
+
+# Additional resources that can be created alongside the docsconverter deployment
+extraResources: []
+# - apiVersion: v1
+#   kind: ConfigMap
+#   metadata:
+#     name: extra-configmap
+#   data:
+#     key: value
