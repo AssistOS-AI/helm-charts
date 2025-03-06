@@ -125,11 +125,13 @@ Configuration apihub.json.
         "applications-storage",
         "server-flow-apis",
         "personalities-storage",
+        "chat",
         "subscribers",
         "webhook",
         "tasks",
         "logger",
         "flows",
+        "telegram-chat",
         "lightDBEnclave",
         "staticServer"
     ],
@@ -154,6 +156,9 @@ Configuration apihub.json.
         "spaces-storage": {
             "module": "./../../apihub-components/spaces-storage"
         },
+        "chat": {
+            "module": "./../../apihub-components/chat"
+        },
         "personalities-storage": {
             "module": "./../../apihub-components/personalities-storage"
         },
@@ -177,6 +182,9 @@ Configuration apihub.json.
         },
         "logger": {
             "module": "./../../apihub-components/logger"
+        },
+        "telegram-chat": {
+            "module": "./../../apihub-components/telegram-chat"
         }
     },
     "responseHeaders": {
