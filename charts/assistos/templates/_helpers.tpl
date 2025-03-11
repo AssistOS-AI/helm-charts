@@ -107,6 +107,7 @@ Configuration apihub.json.
     "storage": "../apihub-root",
     "lightDBStorage": "../data-volume/lightDB",
     "externalStorage": "../data-volume",
+    "workers": 1,
     "port": 8080,
     "preventRateLimit": true,
     "activeComponents": [
