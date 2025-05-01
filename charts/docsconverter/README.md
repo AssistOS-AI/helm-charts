@@ -1,93 +1,84 @@
-# DocsConverter
+# docsconverter
 
-A Helm chart for the AssistOS Document Converter service
+![Version: 1.0.2](https://img.shields.io/badge/Version-1.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
-## Introduction
+A Helm chart for Kubernetes
 
-This chart deploys the DocsConverter service which is responsible for converting various document formats to be used in the AssistOS platform.
+## Values
 
-## Prerequisites
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| affinity | object | `{}` |  |
+| autoscaling.enabled | bool | `false` |  |
+| autoscaling.maxReplicas | int | `3` |  |
+| autoscaling.minReplicas | int | `1` |  |
+| autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
+| autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
+| config.logLevel | string | `"info"` |  |
+| config.overrideConfigJson | string | `""` |  |
+| deploymentStrategy.type | string | `"Recreate"` |  |
+| extraResources | list | `[]` |  |
+| fullnameOverride | string | `""` |  |
+| image.pullPolicy | string | `"Always"` |  |
+| image.repository | string | `"assistos/docsconverter"` |  |
+| image.sha | string | `"08fe10d1303f8daeb0ec0990e54fb8268ef49f5faddb6c9719c731755595b917"` |  |
+| image.tag | string | `"1.0.0-rc1"` |  |
+| imagePullSecrets | list | `[]` |  |
+| livenessProbe.failureThreshold | int | `10` |  |
+| livenessProbe.httpGet.path | string | `"/ready"` |  |
+| livenessProbe.httpGet.port | string | `"http"` |  |
+| livenessProbe.initialDelaySeconds | int | `20` |  |
+| livenessProbe.periodSeconds | int | `20` |  |
+| livenessProbe.successThreshold | int | `1` |  |
+| livenessProbe.timeoutSeconds | int | `3` |  |
+| nameOverride | string | `""` |  |
+| namespaceOverride | string | `""` | (string) Namespace override for multi-namespace deployments in combined charts |
+| nodeSelector | object | `{}` |  |
+| persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
+| persistence.enabled | bool | `true` |  |
+| persistence.existingClaim | string | `""` |  |
+| persistence.finalizers[0] | string | `"kubernetes.io/pvc-protection"` |  |
+| persistence.selectorLabels | object | `{}` |  |
+| persistence.size | string | `"10Gi"` |  |
+| persistence.storageClassName | string | `""` |  |
+| podAnnotations | object | `{}` |  |
+| podSecurityContext.fsGroup | int | `1000` |  |
+| podSecurityContext.runAsGroup | int | `1000` |  |
+| podSecurityContext.runAsUser | int | `1000` |  |
+| readinessProbe.failureThreshold | int | `10` |  |
+| readinessProbe.httpGet.path | string | `"/ready"` |  |
+| readinessProbe.httpGet.port | string | `"http"` |  |
+| readinessProbe.initialDelaySeconds | int | `20` |  |
+| readinessProbe.periodSeconds | int | `20` |  |
+| readinessProbe.successThreshold | int | `1` |  |
+| readinessProbe.timeoutSeconds | int | `3` |  |
+| replicaCount | int | `1` |  |
+| resources.limits.cpu | string | `"500m"` |  |
+| resources.limits.memory | string | `"512Mi"` |  |
+| resources.requests.cpu | string | `"200m"` |  |
+| resources.requests.memory | string | `"256Mi"` |  |
+| secretProviderClass.enabled | bool | `false` |  |
+| secretProviderClass.parameters | object | `{}` |  |
+| secretProviderClass.providerName | string | `""` |  |
+| secretProviderClass.secretObjects | list | `[]` |  |
+| securityContext.allowPrivilegeEscalation | bool | `false` |  |
+| securityContext.capabilities.drop[0] | string | `"ALL"` |  |
+| securityContext.privileged | bool | `false` |  |
+| securityContext.readOnlyRootFilesystem | bool | `false` |  |
+| securityContext.runAsGroup | int | `1000` |  |
+| securityContext.runAsNonRoot | bool | `true` |  |
+| securityContext.runAsUser | int | `1000` |  |
+| service.port | int | `3001` |  |
+| service.targetPort | int | `3001` |  |
+| service.type | string | `"ClusterIP"` |  |
+| serviceAccount.annotations | object | `{}` |  |
+| serviceAccount.create | bool | `true` |  |
+| serviceAccount.name | string | `""` |  |
+| tolerations | list | `[]` |  |
+| volumeSnapshots.annotations | object | `{}` |  |
+| volumeSnapshots.className | string | `""` |  |
+| volumeSnapshots.enabled | bool | `false` |  |
+| volumeSnapshots.labels | object | `{}` |  |
 
-- Kubernetes 1.16+
-- Helm 3.1.0+
-- PV provisioner support in the underlying infrastructure (if persistence is enabled)
-
-## Installing the Chart
-
-To install the chart with the release name `my-release`:
-
-```bash
-helm install my-release ./docsconverter
-```
-
-## Parameters
-
-### Image parameters
-
-| Name                 | Description                                         | Value                 |
-|----------------------|-----------------------------------------------------|------------------------|
-| `image.repository`   | DocsConverter image repository                      | `assistos/docsconverter` |
-| `image.tag`          | DocsConverter image tag                             | `1.0.0-rc1`           |
-| `image.pullPolicy`   | DocsConverter image pull policy                     | `Always`              |
-
-### Service parameters
-
-| Name                       | Description                                              | Value       |
-|----------------------------|----------------------------------------------------------|-------------|
-| `service.type`             | Service type                                             | `ClusterIP` |
-| `service.port`             | Service port                                             | `3001`      |
-
-### Persistence parameters
-
-| Name                          | Description                             | Value         |
-|-------------------------------|-----------------------------------------|---------------|
-| `persistence.enabled`         | Enable persistence using PVC            | `true`        |
-| `persistence.storageClassName`| PVC Storage Class name                  | `""`          |
-| `persistence.accessModes`     | Persistent Volume access modes          | `[ReadWriteOnce]` |
-| `persistence.size`            | PVC Storage Request size                | `10Gi`        |
-
-### Resource parameters
-
-| Name                          | Description                             | Value         |
-|-------------------------------|-----------------------------------------|---------------|
-| `resources.limits.cpu`        | CPU limit                              | `500m`        |
-| `resources.limits.memory`     | Memory limit                           | `512Mi`       |
-| `resources.requests.cpu`      | CPU request                            | `200m`        |
-| `resources.requests.memory`   | Memory request                         | `256Mi`       |
-
-## Configuration
-
-The following table lists the configurable parameters of the DocsConverter chart and their default values.
-
-```yaml
-# Default values for docsconverter
-replicaCount: 1
-
-image:
-  repository: assistos/docsconverter
-  pullPolicy: Always
-  tag: "1.0.0-rc1"
-
-service:
-  type: ClusterIP
-  port: 3001
-
-persistence:
-  enabled: true
-  accessModes:
-    - ReadWriteOnce
-  size: 10Gi
-  storageClassName: ""
-```
-
-Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example:
-
-```bash
-helm install my-release ./docsconverter --set replicaCount=2
-```
-
-Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example:
-
-```bash
-helm install my-release ./docsconverter -f values.yaml
-``` 
+----------------------------------------------
+Autogenerated from chart metadata using [helm-docs v1.8.1](https://github.com/norwoodj/helm-docs/releases/v1.8.1)

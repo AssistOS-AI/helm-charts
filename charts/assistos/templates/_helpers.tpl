@@ -95,7 +95,14 @@ Configuration env.json
   "BDNS_ROOT_HOSTS": "http://127.0.0.1:8080",
   "OPENDSU_ENABLE_DEBUG": {{ required "config.dev must be set" .Values.config.dev | quote}},
   "BASE_URL": {{ required "config.productionBaseUrl must be set" .Values.config.productionBaseUrl | quote}},
-  "LOG_LEVEL": {{ required "config.logLevel must be set" .Values.config.logLevel | quote}}
+  "LOG_LEVEL": {{ required "config.logLevel must be set" .Values.config.logLevel | quote}},
+  "SENDGRID_API_KEY": {{ required "config.sendgridApiKey must be set" .Values.config.sendgridApiKey | quote}},
+  "SENDGRID_SENDER_EMAIL": {{ required "config.sendgridSenderEmail must be set" .Values.config.sendgridSenderEmail | quote}},
+  "AUTH_API_PREFIX": {{ required "config.authApiPrefix must be set" .Values.config.authApiPrefix | quote}},
+  "LOGS_FOLDER": {{ required "config.logsFolder must be set" .Values.config.logsFolder | quote}},
+  "AUDIT_FOLDER": {{ required "config.auditFolder must be set" .Values.config.auditFolder | quote}},
+  "SERVERLESS_ID": {{ required "config.serverlessId must be set" .Values.config.serverlessId | quote}},
+  "SERVERLESS_STORAGE": {{ required "config.serverlessStorage must be set" .Values.config.serverlessStorage | quote}}
 }
 {{- end }}
 
@@ -105,9 +112,9 @@ Configuration apihub.json.
 {{- define "assistos.apihubJson" -}}
 {
     "storage": "../apihub-root",
+    "workers": 1,
     "lightDBStorage": "../data-volume/lightDB",
     "externalStorage": "../data-volume",
-    "workers": 1,
     "port": 8080,
     "preventRateLimit": true,
     "activeComponents": [
@@ -118,20 +125,16 @@ Configuration apihub.json.
         "mq",
         "secrets",
         "versionlessDSU",
+        "Gatekeeper",
+        "proxy",
+        "globalServerlessAPI",
         "llms",
-        "users-storage",
         "document",
-        "spaces-storage",
         "knowledge-storage",
-        "applications-storage",
-        "server-flow-apis",
-        "personalities-storage",
         "chat",
         "subscribers",
-        "webhook",
         "tasks",
         "logger",
-        "flows",
         "telegram-chat",
         "lightDBEnclave",
         "staticServer"
@@ -148,35 +151,17 @@ Configuration apihub.json.
         "llms": {
             "module": "./../../apihub-components/llms"
         },
-        "users-storage": {
-            "module": "./../../apihub-components/users-storage"
-        },
         "document": {
             "module": "./../../apihub-components/document"
         },
-        "spaces-storage": {
-            "module": "./../../apihub-components/spaces-storage"
+        "globalServerlessAPI": {
+            "module": "./../../apihub-components/globalServerlessAPI"
         },
         "chat": {
             "module": "./../../apihub-components/chat"
         },
-        "personalities-storage": {
-            "module": "./../../apihub-components/personalities-storage"
-        },
-        "applications-storage": {
-            "module": "./../../apihub-components/applications-storage"
-        },
-        "server-flow-apis": {
-            "module": "./../../apihub-components/applications-storage"
-        },
         "subscribers": {
             "module": "./../../apihub-components/subscribers"
-        },
-        "flows": {
-            "module": "./../../apihub-components/flows"
-        },
-        "webhook": {
-            "module": "./../../apihub-components/webhook"
         },
         "tasks": {
             "module": "./../../apihub-components/tasks"
@@ -186,14 +171,19 @@ Configuration apihub.json.
         },
         "telegram-chat": {
             "module": "./../../apihub-components/telegram-chat"
+        },
+        "Gatekeeper": {
+            "module": "./../../apihub-components/Gatekeeper"
         }
     },
     "responseHeaders": {
         "X-Frame-Options": "SAMEORIGIN",
-        "X-XSS-Protection": "1; mode=block"
+        "X-XSS-Protection": "1; mode=block",
+        "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'"
     },
     "enableRequestLogger": true,
     "enableJWTAuthorisation": false,
-    "enableOAuth": false
+    "enableOAuth": false,
+    "enableLocalhostAuthorization": false
 }
 {{- end }}

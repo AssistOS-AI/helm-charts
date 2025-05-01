@@ -11,7 +11,7 @@ config:
   # -- The Vault domain, should be vault.company, e.g. vault.my-company
   vaultDomain: "vault.my-company"
   buildSecretKey: "nosecretfordevelopers"  # pragma: allowlist secret
-  ssoSecretsEncryptionKey: "8d0BO3SUi1hLkuxYiw1Oo8fPRCSN/r0RknDXAYnhKro="
+  ssoSecretsEncryptionKey: ""
   # -- Enable Dev mode
   dev: "true"
   environmentMode: "production"
@@ -19,6 +19,13 @@ config:
   llmsServerProductionBaseUrl: "http://localhost:8079"
   docsConverterUrl: "http://localhost:3001"
   enableEmailService: "true"
+  sendgridApiKey: ""
+  sendgridSenderEmail: ""
+  authApiPrefix: "/auth"
+  logsFolder: "../apihub-root/external-volume/assistOS-logs"
+  auditFolder: "../apihub-root/external-volume/assistOS-audit"
+  serverlessId: "assistOS"
+  serverlessStorage: "../apihub-components/globalServerlessAPI"
   s3: true
   env:
     GIT_TOKEN: ""
