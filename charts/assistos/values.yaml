@@ -26,6 +26,8 @@ config:
   auditFolder: "../apihub-root/external-volume/assistOS-audit"
   serverlessId: "assistOS"
   serverlessStorage: "../apihub-components/globalServerlessAPI"
+  rpId: ""
+  origin: ""
   s3: true
   env:
     GIT_TOKEN: ""
