@@ -44,7 +44,6 @@ config:
     # Note: Usually not required
     vaultDomainConfigJson: ""
 
-    emailConfigJson: ""
     # -- Option to explitly override the env.json for APIHub instead of using the predefined template.
     # Note 1: Usually not required to override.
     # Note 2: If secretProviderClass.enabled=true, then this value is ignored as it is used/mounted from Secret Vault.

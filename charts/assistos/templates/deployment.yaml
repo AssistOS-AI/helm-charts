@@ -77,10 +77,6 @@ spec:
               subPath: assistOS-configs.json
               readOnly: true
             - name: assistos-secret-volume
-              mountPath: /assistos-workspace/data-volume/config/emailConfig.json
-              subPath: emailConfig.json
-              readOnly: true
-            - name: assistos-secret-volume
               mountPath: /assistos-workspace/apihub-root/external-volume/config/apihub.json
               subPath: apihub.json
               readOnly: true
