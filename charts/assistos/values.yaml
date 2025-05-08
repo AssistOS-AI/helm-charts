@@ -28,6 +28,7 @@ config:
   serverlessStorage: "../apihub-components/globalServerlessAPI"
   rpId: ""
   origin: ""
+  appName: "AssistOS"
   s3: true
   env:
     GIT_TOKEN: ""

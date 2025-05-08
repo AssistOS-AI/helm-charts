@@ -104,7 +104,8 @@ Configuration env.json
   "SERVERLESS_ID": {{ required "config.serverlessId must be set" .Values.config.serverlessId | quote}},
   "SERVERLESS_STORAGE": {{ required "config.serverlessStorage must be set" .Values.config.serverlessStorage | quote}},
   "RP_ID": {{ required "config.rpId must be set" .Values.config.rpId | quote}},
-  "ORIGIN": {{ required "config.origin must be set" .Values.config.origin | quote}}
+  "ORIGIN": {{ required "config.origin must be set" .Values.config.origin | quote}},
+  "APP_NAME": {{ required "config.appName must be set" .Values.config.appName | quote}}
 }
 {{- end }}
 
