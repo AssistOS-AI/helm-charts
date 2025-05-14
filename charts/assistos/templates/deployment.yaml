@@ -31,23 +31,47 @@ spec:
         - name: init-copy-data
           image: {{ .Values.assistos.image.repository }}:{{ .Values.assistos.image.tag }}
           command:
-            - /bin/sh
-            - -c
+            - "sh"
+            - "-c"
             - |
-              # Check if initialization marker exists
-              if [ ! -f /mnt/data-volume/.init-complete ]; then
-                echo "Performing first-time initialization..."
-                # Copy all data
-                cp -r /assistos-workspace/data-volume/* /mnt/data-volume/
-                # Create marker file to indicate initialization is complete
-                touch /mnt/data-volume/.init-complete
-                echo "Initialization complete"
-              else
-                echo "Already initialized, skipping data copy"
-              fi
+              # Function to copy all files and directories, overwriting existing ones
+              copy_with_overwrite() {
+                local src=$1
+                local dest=$2
+                echo "Copying all files from $src to $dest (with overwrite)..."
+                
+                # Create destination directory if it doesn't exist
+                mkdir -p "$dest"
+                
+                # Find all files and directories in source
+                cd "$src"
+                find . -type f -o -type d | while read -r item; do
+                  # Skip the root directory itself
+                  if [ "$item" = "." ]; then
+                    continue
+                  fi
+                  
+                  # Get the relative path
+                  rel_path="${item#./}"
+                  dest_path="$dest/$rel_path"
+                  
+                  if [ -d "$item" ]; then
+                    echo "Creating directory: $dest_path"
+                    mkdir -p "$dest_path"
+                  elif [ -f "$item" ]; then
+                    echo "Copying file: $rel_path (overwriting if exists)"
+                    cp -f "$item" "$dest_path"
+                  fi
+                done
+                echo "Copy operation completed for $dest"
+              }
+
+              # Copy all content from external-volume with overwrite
+              copy_with_overwrite "/assistos-workspace/apihub-root/external-volume" "/mnt/assistos-external-volume"
+
           volumeMounts:
-            - name: assistos-data-volume
-              mountPath: /mnt/data-volume
+            - name: assistos-external-volume
+              mountPath: /mnt/assistos-external-volume
       containers:
         - name: assistos
           securityContext:
@@ -63,15 +87,8 @@ spec:
           readinessProbe:
             {{- toYaml .Values.assistos.readinessProbe | nindent 12 }}
           volumeMounts:
-            - name: assistos-data-volume
-              mountPath: /assistos-workspace/data-volume
-            - name: assistos-data-volume-config
-              mountPath: /assistos-workspace/data-volume/config/config.json
-              subPath: config.json
-            - name: assistos-data-volume-config
-              mountPath: /assistos-workspace/data-volume/config/securityConfig.json
-              subPath: securityConfig.json
-              readOnly: true
+            - name: assistos-external-volume
+              mountPath: /assistos-workspace/apihub-root/external-volume
             - name: assistos-apihub-root-config
               mountPath: /assistos-workspace/apihub-root/assistOS-configs.json
               subPath: assistOS-configs.json
@@ -116,13 +133,10 @@ spec:
         - name: assistos-env-volume
           configMap:
             name: {{ include "assistos.fullname" . }}-environment
-        - name: assistos-data-volume-config
-          configMap:
-            name: {{ include "assistos.fullname" . }}-config
         - name: assistos-apihub-root-config
           configMap:
             name: {{ include "assistos.fullname" . }}-apihub-root-config
-        - name: assistos-data-volume
+        - name: assistos-external-volume
           persistentVolumeClaim:
             claimName: {{ include "assistos.pvc" . }}
       {{- with .Values.nodeSelector }}
