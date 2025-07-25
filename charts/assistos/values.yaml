@@ -10,9 +10,11 @@ config:
   subDomain: "epipoc.my-company"
   # -- The Vault domain, should be vault.company, e.g. vault.my-company
   vaultDomain: "vault.my-company"
+  cloudEnclaveDomain: "vault"
   buildSecretKey: "nosecretfordevelopers"  # pragma: allowlist secret
+  cloudEnclaveConfigLocation: "../remote-enclave-root"
+  cloudEnclaveSecret: "remoteenclave"
   ssoSecretsEncryptionKey: ""
-  # -- Enable Dev mode
   dev: "true"
   environmentMode: "production"
   productionBaseUrl: "http://localhost:8080"
@@ -21,6 +23,9 @@ config:
   enableEmailService: "true"
   sendgridApiKey: ""
   sendgridSenderEmail: ""
+  appSenderEmail: "support@outfinitygift.com"
+  mailjetApiKey: ""
+  mailjetSecretKey: ""
   authApiPrefix: "/auth"
   logsFolder: "../apihub-root/external-volume/assistOS-logs"
   auditFolder: "../apihub-root/external-volume/assistOS-audit"
@@ -29,6 +34,12 @@ config:
   rpId: ""
   origin: ""
   appName: "AssistOS"
+  nodeEnv: "prod"
+  llmProvidersFolder: "../../../systemApps/LLM-Support/providers"
+  sysadminEmail: "founder@axiologic.net"
+  sysadminSpace: "Admin Space"
+  systemMintAmount: 1000000000
+  founderPercentage: 10
   s3: true
   env:
     GIT_TOKEN: ""

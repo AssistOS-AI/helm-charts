@@ -1,6 +1,6 @@
 # assistos
 
-![Version: 1.1.0](https://img.shields.io/badge/Version-1.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.0](https://img.shields.io/badge/AppVersion-1.1.0-informational?style=flat-square)
+![Version: 1.1.1](https://img.shields.io/badge/Version-1.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.0](https://img.shields.io/badge/AppVersion-1.1.0-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -20,18 +20,27 @@ A Helm chart for Kubernetes
 | assistos.readinessProbe | object | `{"failureThreshold":10,"httpGet":{"path":"/ready-probe","port":"http"},"initialDelaySeconds":20,"periodSeconds":20,"successThreshold":1,"timeoutSeconds":3}` | Readiness probe. See [https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) |
 | assistos.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":false,"runAsGroup":1000,"runAsNonRoot":true,"runAsUser":1000}` | Security Context for the runner container See [https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container) |
 | config.appName | string | `"AssistOS"` |  |
+| config.appSenderEmail | string | `"support@outfinitygift.com"` |  |
 | config.auditFolder | string | `"../apihub-root/external-volume/assistOS-audit"` |  |
 | config.authApiPrefix | string | `"/auth"` |  |
 | config.buildSecretKey | string | `"nosecretfordevelopers"` |  |
-| config.dev | string | `"true"` | Enable Dev mode |
+| config.cloudEnclaveConfigLocation | string | `"../remote-enclave-root"` |  |
+| config.cloudEnclaveDomain | string | `"vault"` |  |
+| config.cloudEnclaveSecret | string | `"remoteenclave"` |  |
+| config.dev | string | `"true"` |  |
 | config.docsConverterUrl | string | `"http://localhost:3001"` |  |
 | config.domain | string | `"epipoc"` | The Domain, e.g. "epipoc" |
 | config.enableEmailService | string | `"true"` |  |
 | config.env.GIT_TOKEN | string | `""` |  |
 | config.environmentMode | string | `"production"` |  |
+| config.founderPercentage | int | `10` |  |
+| config.llmProvidersFolder | string | `"../../../systemApps/LLM-Support/providers"` |  |
 | config.llmsServerProductionBaseUrl | string | `"http://localhost:8079"` |  |
 | config.logLevel | string | `"DEBUG"` |  |
 | config.logsFolder | string | `"../apihub-root/external-volume/assistOS-logs"` |  |
+| config.mailjetApiKey | string | `""` |  |
+| config.mailjetSecretKey | string | `""` |  |
+| config.nodeEnv | string | `"prod"` |  |
 | config.origin | string | `""` |  |
 | config.overrides | object | `{"apihubJson":"","bdnsHosts":"","domainConfigJson":"","envJson":"","subDomainConfigJson":"","vaultDomainConfigJson":""}` | The assistos version |
 | config.overrides.apihubJson | string | `""` | Option to explitly set the apihub.json instead of using the default from [https://github.com/pharmaledgerassoc/assistos-workspace/blob/v1.3.1/apihub-root/external-volume/config/apihub.json](https://github.com/pharmaledgerassoc/assistos-workspace/blob/v1.3.1/apihub-root/external-volume/config/apihub.json). Note: If secretProviderClass.enabled=true, then this value is ignored as it is used/mounted from Secret Vault. <br/>assistos-86d4f7878-jrbfw Settings: [https://docs.google.com/document/d/1mg35bb1UBUmTpL1Kt4GuZ7P0K_FMqt2Mb8B3iaDf52I/edit#heading=h.z84gh8sclah3](https://docs.google.com/document/d/1mg35bb1UBUmTpL1Kt4GuZ7P0K_FMqt2Mb8B3iaDf52I/edit#heading=h.z84gh8sclah3) <br/> For SSO (not enabled by default): <br/> 1. "enableOAuth": true <br/> 2. "serverAuthentication": true <br/> 3. For SSO via OAuth with Azure AD, replace <TODO_*> with appropriate values.    For other identity providers (IdP) (e.g. Google, Ping, 0Auth), refer to documentation.    "redirectPath" must match the redirect URL configured at IdP <br/> 4. Add these values to "skipOAuth": "/leaflet-wallet/", "/directory-summary/", "/iframe/" |
@@ -49,6 +58,9 @@ A Helm chart for Kubernetes
 | config.serverlessStorage | string | `"../apihub-components/globalServerlessAPI"` |  |
 | config.ssoSecretsEncryptionKey | string | `""` |  |
 | config.subDomain | string | `"epipoc.my-company"` | The Subdomain, should be domain.company, e.g. epipoc.my-company |
+| config.sysadminEmail | string | `"founder@axiologic.net"` |  |
+| config.sysadminSpace | string | `"Admin Space"` |  |
+| config.systemMintAmount | int | `1000000000` |  |
 | config.vaultDomain | string | `"vault.my-company"` | The Vault domain, should be vault.company, e.g. vault.my-company |
 | extraResources | string | `nil` | An array of extra resources that will be deployed. This is useful e.g. for custom resources like SnapshotSchedule provided by [https://github.com/backube/snapscheduler](https://github.com/backube/snapscheduler). |
 | fullnameOverride | string | `""` | fullnameOverride completely replaces the generated name. From [https://stackoverflow.com/questions/63838705/what-is-the-difference-between-fullnameoverride-and-nameoverride-in-helm](https://stackoverflow.com/questions/63838705/what-is-the-difference-between-fullnameoverride-and-nameoverride-in-helm) |
