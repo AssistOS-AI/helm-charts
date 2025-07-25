@@ -3,6 +3,16 @@ entries:
   assistos:
   - apiVersion: v2
     appVersion: 1.1.0
+    created: "2025-07-25T13:07:11.479454997Z"
+    description: A Helm chart for Kubernetes
+    digest: 981a907c14ff9ab548ad4fa6bf1be544b9c68131d6d53113ea547dfc45317a76
+    name: assistos
+    type: application
+    urls:
+    - https://github.com/AssistOS-AI/helm-charts/releases/download/assistos-1.1.2/assistos-1.1.2.tgz
+    version: 1.1.2
+  - apiVersion: v2
+    appVersion: 1.1.0
     created: "2025-07-25T12:52:39.818374926Z"
     description: A Helm chart for Kubernetes
     digest: 185bf1a9586900aa5f8d89455c8560270116be3f4c44b8af014611599bcfd934
@@ -493,4 +503,4 @@ entries:
     urls:
     - https://github.com/AssistOS-AI/helm-charts/releases/download/llmadapter-1.0.1/llmadapter-1.0.1.tgz
     version: 1.0.1
-generated: "2025-07-25T12:52:39.818753251Z"
+generated: "2025-07-25T13:07:11.479816337Z"
