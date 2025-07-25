@@ -141,6 +141,7 @@ Configuration apihub.json.
         "secrets",
         "versionlessDSU",
         "Gatekeeper",
+        "internalWebhook",
         "proxy",
         "globalServerlessAPI",
         "llms",
