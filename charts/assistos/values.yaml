@@ -23,7 +23,7 @@ config:
   enableEmailService: "true"
   sendgridApiKey: ""
   sendgridSenderEmail: ""
-  appSenderEmail: "support@outfinitygift.com"
+  appSenderEmail: "support@assistos.dev"
   mailjetApiKey: ""
   mailjetSecretKey: ""
   authApiPrefix: "/auth"
