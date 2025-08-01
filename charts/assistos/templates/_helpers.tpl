@@ -195,7 +195,7 @@ Configuration apihub.json.
     "responseHeaders": {
         "X-Frame-Options": "SAMEORIGIN",
         "X-XSS-Protection": "1; mode=block",
-        "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'"
+        "Content-Security-Policy": ""
     },
     "enableRequestLogger": true,
     "enableJWTAuthorisation": false,
