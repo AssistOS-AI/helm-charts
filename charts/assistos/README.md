@@ -1,6 +1,6 @@
 # assistos
 
-![Version: 1.1.5](https://img.shields.io/badge/Version-1.1.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.0](https://img.shields.io/badge/AppVersion-1.1.0-informational?style=flat-square)
+![Version: 1.1.6](https://img.shields.io/badge/Version-1.1.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.0](https://img.shields.io/badge/AppVersion-1.1.0-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -49,7 +49,7 @@ A Helm chart for Kubernetes
 | config.overrides.envJson | string | `""` | Option to explitly override the env.json for APIHub instead of using the predefined template. Note 1: Usually not required to override. Note 2: If secretProviderClass.enabled=true, then this value is ignored as it is used/mounted from Secret Vault. |
 | config.overrides.subDomainConfigJson | string | `""` | Option to explicitly override the config.json used for the subDomain instead of using the predefined template. Note: Usually not required |
 | config.overrides.vaultDomainConfigJson | string | `""` | Option to explicitly override the config.json used for the vaultDomain instead of using the predefined template. Note: Usually not required |
-| config.productionBaseUrl | string | `"http://localhost:8080"` |  |
+| config.productionBaseUrl | string | `"http://assistos:8080"` |  |
 | config.rpId | string | `""` |  |
 | config.s3 | bool | `true` |  |
 | config.sendgridApiKey | string | `""` |  |
