@@ -144,14 +144,10 @@ Configuration apihub.json.
         "internalWebhook",
         "proxy",
         "globalServerlessAPI",
-        "llms",
         "document",
         "knowledge-storage",
-        "chat",
-        "subscribers",
         "tasks",
         "logger",
-        "telegram-chat",
         "lightDBEnclave",
         "staticServer"
     ],
@@ -164,29 +160,17 @@ Configuration apihub.json.
         },
         "bricking": {},
         "anchoring": {},
-        "llms": {
-            "module": "./../../apihub-components/llms"
-        },
         "document": {
             "module": "./../../apihub-components/document"
         },
         "globalServerlessAPI": {
             "module": "./../../apihub-components/globalServerlessAPI"
         },
-        "chat": {
-            "module": "./../../apihub-components/chat"
-        },
-        "subscribers": {
-            "module": "./../../apihub-components/subscribers"
-        },
         "tasks": {
             "module": "./../../apihub-components/tasks"
         },
         "logger": {
             "module": "./../../apihub-components/logger"
-        },
-        "telegram-chat": {
-            "module": "./../../apihub-components/telegram-chat"
         },
         "Gatekeeper": {
             "module": "./../../apihub-components/Gatekeeper"
